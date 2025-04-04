@@ -55,4 +55,32 @@ Cancellation Month: Mes en que el cliente canceló su membresía en el programa 
 aplica.
 
 
+eliminar filas duplicadas
 
+df_flight_limpio= df_flight.drop_duplicates(subset="Loyalty Number", keep="last")
+df_flight_limpio.head()
+
+#Borro las filas duplicadas. Uso keep='first' para eliminar duplicados en el DataFrame conservando solo la primera aparición de cada registro,
+#ya que generalmente la primera entrada es la más relevante o correcta.
+df_flight_not_duplicated = df_flight.drop_duplicates(keep='first')
+#Verifico que no hay duplicados
+df_flight_not_duplicated.duplicated().sum()
+
+
+df_customer_flight_activity.duplicated().sum()
+df_customer_flight_activity[df_customer_flight_activity.duplicated()] # -> veo algunas de las filas duplicadas
+df_customer_flight_activity[df_customer_flight_activity.duplicated(keep=False)] # -> si quiero incluir la fila original además del duplicado
+duplicados = df_customer_flight_activity[df_customer_flight_activity.duplicated()] # creo una variable para mostrar cuáles son los duplicados
+duplicados
+df_customer_flight_activity_no_duplicados = df_customer_flight_activity.drop_duplicates(keep='first') # Elimino las filas duplicadas y conservo la primera aparición de cada registro
+df_customer_flight_activity_no_duplicados
+df_customer_flight_activity_no_duplicados.duplicated().sum() # Compruebo de que haya duplicados después de haberlos borrado
+df_customer_flight_activity_no_duplicados = df_customer_flight_activity # Cambio el nombre del DF para tener el inicial
+
+
+Unir los datasets
+
+df_unido = df_l_hist.merge(df_f_act, on=["Loyalty Number"], how="left")
+df_unido.head()
+
+df_unido.info()
